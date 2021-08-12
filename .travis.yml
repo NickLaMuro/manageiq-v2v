@@ -1,18 +1,14 @@
-dist: xenial
-matrix:
-  include:
-  - name: "Node.js: 12"
-    language: node_js
-    cache: yarn
-    node_js:
-    - '12' # current stable
-    script: yarn test --runInBand
-  - name: "Ruby: 2.6.6"
-    language: ruby
-    rvm:
-    - 2.6.6
-    cache: bundler
-    addons:
-      postgresql: '10'
-    install: bin/setup
-    after_script: bin/ci/after_script
+---
+language: ruby
+cache:
+- bundler
+rvm:
+- 2.6.6
+addons:
+  postgresql: '10'
+env:
+  matrix:
+  - TEST_SUITE=rails
+install: bin/setup
+script: bundle exec rake
+after_script: bin/ci/after_script
